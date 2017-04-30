@@ -56,9 +56,11 @@ void loop () {
     previous_distance = distance;
   }
   
-  return distance;
   Serial.print("Distance:");
   Serial.println(distance);
   delay(DELAY_MS);
+  
+  return distance;
+
   
 }
