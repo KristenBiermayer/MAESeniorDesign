@@ -5,7 +5,7 @@
 
 * Make sure to increment the trailing number by 1 with every new iteration of the code
 * Codes that are GOOD will be denoted with a W (working)
-** e.g. MAESeniorDesign/Ultrasonic/get_distance_00W
+* e.g. MAESeniorDesign/Ultrasonic/get_distance_00W
  
 
 ## List of Subfolders
