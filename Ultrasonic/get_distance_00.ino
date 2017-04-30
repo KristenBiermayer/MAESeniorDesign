@@ -26,7 +26,7 @@ float get_distance() {
   digitalWrite (trigPin,HIGH);
   delayMicroseconds(10); 
   digitalWrite(trigPin,LOW);
-
+  
   //read the echopin. value returned measures time of TOTAL sound wave travel (from being transmitted to being received)
   float duration = pulseIn (echoPin,HIGH);
 
@@ -38,7 +38,7 @@ float get_distance() {
   float distance = distance_cm * 0.3937; 
 
   float distance_traveled = distance - previous_distance;
-
+ 
   //convert to positive number to account for robot traveling away or towards the wall 
   if (distance_traveled < 0){
     distance_traveled = distance_traveled * -1;
@@ -59,7 +59,9 @@ float get_distance() {
   Serial.print("Distance:");
   Serial.println(distance);
   
-  return distance;
+  return distance;  
+}
 
-  
+void loop() {
+  float distance = get_distance();
 }
