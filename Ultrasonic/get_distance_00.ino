@@ -17,7 +17,7 @@ void setup () {
   Serial.begin(9600);        // begin serial communication
 }
 
-void loop () {
+float get_distance() {
   // clear trigPin
   digitalWrite (trigPin,LOW);
   delayMicroseconds(2);
@@ -58,7 +58,6 @@ void loop () {
   
   Serial.print("Distance:");
   Serial.println(distance);
-  delay(DELAY_MS);
   
   return distance;
 
