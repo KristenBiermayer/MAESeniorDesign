@@ -15,10 +15,13 @@
     * floor_to_wall
     * on_floor
     * wall_to_floor
-    * on_wall 
-    
+    * on_wall  
+* Steering
+    * orient_steering
 * IMU
-* 
+    * get_roll_velocity
+    
+  
 
 
 
