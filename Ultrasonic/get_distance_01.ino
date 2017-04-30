@@ -52,7 +52,7 @@ float get_distance() {
   // if distance traveled measured by Ultrasonic is greater than what our robot can physically achieve, value is invalid
   // loop will return -1 and code will re-run until valid measure is given
   if (distance_traveled > MAX_DISTANCE_TRAVELED) {
-    return -1.0;
+    distance = -1.0;
   } else {
     previous_distance = distance;
   }
