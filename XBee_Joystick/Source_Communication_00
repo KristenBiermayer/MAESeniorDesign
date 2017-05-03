@@ -1,0 +1,15 @@
+#include <SoftwareSerial.h>
+SoftwareSerial xbee(2,3);
+const int joystick_pin = A1;
+
+void setup() {
+  Serial.begin(9600);
+  xbee.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(joystick_pin);
+  xbee.print(value);
+  xbee.println();
+  delay(1000);
+}
