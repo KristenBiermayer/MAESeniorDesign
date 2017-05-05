@@ -1,0 +1,34 @@
+#include <Servo.h>
+ 
+Servo steering; // instantiate a steering servo object
+Servo throttle; // instantiate a throttle servo object
+ 
+void setup() {
+  steering.attach(9);  // attach steering servo object to pin 9
+  throttle.attach(10); // attach throttle servo object to pin 10
+}
+ 
+loop() {
+  int x_axis = AnalogRead(0); // value of X-Axis joystick (0-1023, 512 = centered)
+  int y_axis = AnalogRead(1); // value of Y-Axis joystick (0-1023, 512 = centered)
+
+  // filter out a centered joystick - no action
+  if (x_axis < 510 || x_axis > 514) {
+    if (y_axis < 510 || y_axis > 514) {
+      // Map values from potentiometers to a smaller range for the servos (0-255)
+      x_axis = map(x_axis, 0, 1023, 0, 255);
+      y_axis = map(y_axis, 0, 1023, 0, 255);
+
+      steering.write(x_axis); // here we assume that values > 128 = right, and < 128 = left for the steering servo
+      throttle.write(y_axis); // here we assume that values > 128 = forward, and < 128 = reverse for the motor controller
+    }
+  }
+
+  // center both servos if the joystick is centered
+  if (x_axis >= 510 || x_axis <= 514) {
+    if (y_axis >= 510 || y_axis <= 514) {
+      throttle.write(128);
+      steering.write(128);
+    }
+  }
+}
