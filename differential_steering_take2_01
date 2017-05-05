@@ -1,0 +1,57 @@
+#include <Servo.h>
+ 
+Servo l_track; // instantiate a servo object for the left track motor controller
+Servo r_track; // instantiate a servo object for the right track motor controller
+ 
+void setup() {
+  l_track.attach(9);  // attach left track servo object to pin 9 (PWM)
+  r_track.attach(10); // attach right track servo object to pin 10 (PWM)
+}
+ 
+loop() {
+  int x_axis = AnalogRead(0); // value of X-Axis joystick (0-1023, 512 = centered)
+  int y_axis = AnalogRead(1); // value of Y-Axis joystick (0-1023, 512 = centered)
+
+  // filter out a centered joystick - no action
+  if (x_axis < 510 || x_axis > 514) {
+    if (y_axis < 510 || y_axis > 514) {
+      // Map values from potentiometers to a smaller range for the PWM motor controllers (0-255)
+      x_axis = map(x_axis, 0, 1023, 0, 255);
+      y_axis = map(y_axis, 0, 1023, 0, 255);
+
+      int ly_axis = y_axis;
+      int ry_axis = y_axis;
+
+      if (x_axis < 126) { // turning left, so slow-down left track
+        if (y_axis > 130) { // moving forward
+          ly_axis -= (255 - x_axis); // decreasing the value - moving it closer to the center-point - slows it down
+        }
+
+        if (y_axis < 126) { // moving in reverse
+          ly_axis += (255 - x_axis); // increasing the value - moving it closer to the center-point - slows it down
+        }
+      }
+
+      if (x_axis > 130) { // turning right, so slow-down right track
+        if (y_axis > 130) { // moving forward
+          ry_axis -= (255 - x_axis); // decreasing the value - moving it closer to the center-point - slows it down
+        }
+
+        if (y_axis < 126) { // moving in reverse
+          ry_axis += (255 - x_axis); // increasing the value - moving it closer to the center-point - slows it down
+        }
+      }
+
+      l_track.write(ly_axis); // here we assume that values > 128 = forward, and < 128 = reverse for the left track motor controller
+      r_track.write(ry_axis); // here we assume that values > 128 = forward, and < 128 = reverse for the right track motor controller
+    }
+  }
+
+  // center both PWM values if the joystick is centered (bringing both motor controllers and tracks to a stop)
+  if (x_axis >= 510 || x_axis <= 514) {
+    if (y_axis >= 510 || y_axis <= 514) {
+      l_track.write(128);
+      r_track.write(128);
+    }
+  }
+}
