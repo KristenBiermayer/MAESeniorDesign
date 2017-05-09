@@ -90,5 +90,5 @@ void loop() {
       previous_distance = get_raw_distance(ULTRASONIC_FRONT_TRIG, ULTRASONIC_FRONT_ECHO);
     }
   }
-  delay(ULTRASONIC_DELAY_MS);
+
 }
