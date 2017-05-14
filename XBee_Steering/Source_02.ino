@@ -19,14 +19,15 @@ void setup() {
 }
 
 void loop() {
-  int joystick_value = analogRead(joystick_pin);
-  int pot_value = analogRead(pot_pin);
-  if (joystick_value != prev_joystick_value){
-    xbee.print("j" + String(joystick_value));
-    xbee.println();
-    prev_joystick_value = joystick_value;
+  int joystick_value = analogRead(joystick_pin);  //read value from the pin attached to the joystick
+  int pot_value = analogRead(pot_pin);            
+  if (joystick_value != prev_joystick_value){     // if the joystick value is different from the previous joystick value, we want to send it over to the user
+                                                  // if the current value is equal to the previous value, then the same state will be held and the information will be useless to send over
+    xbee.print("j" + String(pot_value));      //attach j to the beginning of this string as a means of differentiating potetiometer and joystick values
+    xbee.println();   // send the information to the receiver through xbee
+    prev_joystick_value = joystick_value;   // since our current value is different from our previous value, we want to equate our current value to our previous value for our next iteration of this loop
   }
-  if (pot_value != prev_pot_value){
+  if (pot_value != prev_pot_value){         
     xbee.print("p" + String(pot_value));
     xbee.println();
     prev_pot_value = pot_value;
